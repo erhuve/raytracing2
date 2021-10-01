@@ -18,7 +18,8 @@ code = {
       <p>
           <input type=range id=radius> radius
       <p>
-          <input type=range id=focal > focal length
+          <input type=range id=focal value=10> focal length
+          <input type=checkbox id=crazy> Go crazy
    \`);
 
    // INITIALIZE THE SPHERE DATA.
@@ -54,12 +55,13 @@ S.setFragmentShader(\`
 
    uniform float uTime;
    uniform float uFl;
+   uniform bool uCrazy;
    varying vec3 vPos;
 
    // YOU CAN CHANGE CAMERA FOCAL LENGTH.
    // MAYBE YOU CAN TRY MAKING THIS A SLIDER.
 
-   float fl = uFl;
+   float fl = uCrazy ? 1111. * sin(uTime) : uFl / 33. - 3.;
 
    vec3 bgColor = vec3(.3,.4,.5);
 
@@ -188,7 +190,8 @@ S.setVertexShader(\`
 `,
 render: `
    S.setUniform('1f', 'uTime', time);
-   S.setUniform('1f', 'uFl', focal.value / 33.);
+   S.setUniform('1f', 'uFl', focal.value * 33.);
+   S.setUniform('1f', 'uCrazy', crazy.checked);
 
    // SPECIFY COLORED KEY LIGHT + FILL LIGHT.
 
