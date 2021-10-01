@@ -155,7 +155,14 @@ S.setFragmentShader(\`
 *****************************************************/
             vec3 N = normalize(P - uS[n].xyz);
             vec3 R = 2. * dot(N, -W) * N + W;
-
+            float reflectMin = 10000.;
+            for (int n = 0 ; n < nS ; n++) {
+               float reflect = raySphere(P, R, uS[n]);
+               if (reflect > 0. && reflect < reflectMin) {
+                  color += shadeSphere(P, W, uS[n], uSm[n]) * uSm[n][2].rgb;
+                  reflectMin = reflect;
+               }
+            }
          }
       }
 
