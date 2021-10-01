@@ -61,7 +61,21 @@ S.setFragmentShader(\`
    // YOU CAN CHANGE CAMERA FOCAL LENGTH.
    // MAYBE YOU CAN TRY MAKING THIS A SLIDER.
 
-   float fl = uCrazy ? 1111. * sin(uTime) : uFl / 33. - 3.;
+   float fl = uCrazy ? min(uFl, 1000.) * sin(uTime) : uFl / 33. - 3.;
+
+   vec3 stripes(float x) {
+      float t = pow(sin(x) *.5 + .5, .1);
+      return vec3(t*.7, t*t*.9*cos(uTime), t*t*t*.9*cos(uTime));
+   }
+
+   float turbulence(vec3 p) {
+      float t = 0., f = 1.;
+      for (int i = 0 ; i < 10 ; i++) {
+         t += abs(noise(f * p)) / f;
+         f *= 2.;
+      }
+      return t;
+   }
 
    vec3 bgColor = vec3(.3,.4,.5);
 
@@ -119,8 +133,8 @@ S.setFragmentShader(\`
    void main() {
 
       // START WITH SKY COLOR.
-
-      vec3 color = bgColor;
+      vec3 strp = 6.*vPos + vec3(0., 0., .5*uTime);
+      vec3 color = uCrazy ? stripes(strp.x+10.*turbulence(strp/2.)) : bgColor;
 
       // FORM THE RAY FOR THIS PIXEL.
 
