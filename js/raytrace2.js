@@ -17,6 +17,8 @@ code = {
       <br><input type=range id=blue  > blue light
       <p>
           <input type=range id=radius> radius
+      <p>
+          <input type=range id=focal > focal length
    \`);
 
    // INITIALIZE THE SPHERE DATA.
@@ -51,12 +53,13 @@ S.setFragmentShader(\`
    uniform mat4 uSm[nS];
 
    uniform float uTime;
+   uniform float uFl;
    varying vec3 vPos;
 
    // YOU CAN CHANGE CAMERA FOCAL LENGTH.
    // MAYBE YOU CAN TRY MAKING THIS A SLIDER.
 
-   float fl = 3.0;
+   float fl = uFl;
 
    vec3 bgColor = vec3(.3,.4,.5);
 
@@ -185,6 +188,7 @@ S.setVertexShader(\`
 `,
 render: `
    S.setUniform('1f', 'uTime', time);
+   S.setUniform('1f', 'uFl', focal.value / 33.);
 
    // SPECIFY COLORED KEY LIGHT + FILL LIGHT.
 
