@@ -3,7 +3,7 @@ rooms.raytrace2 = function() {
 
 lib3D();
 
-description = `Raytracing to spheres<br>in a fragment shader`;
+description = `Raytracing to spheres<br>in a fragment shader:<br>Pendulum edition`;
 
 code = {
 'init':`
@@ -233,8 +233,8 @@ render: `
        s = Math.sin(time);
 
    S.sc[0] = [ s < 0 ? -.58 : -.58 - .3*s, s < 0 ? .35 : .35 + .2*s, -.2, .3, 0,0,0]; 
-   S.sc[1] = [ -.16, .35, -.2, .3, 0,0,0]; 
-   S.sc[2] = [  .26, .35, -.2, .3, 0,0,0]; 
+   S.sc[1] = [ s === 0 ? -.16 : -.16 + .0085*c, .35, -.2, .3, 0,0,0]; 
+   S.sc[2] = [ s === 0 ? .26 : .26 + .0085*c, .35, -.2, .3, 0,0,0]; 
    S.sc[3] = [ s > 0 ? .68 : .68 + .3*-s, s > 0 ? .35 : .35 + .2*-s, -.2, .3, 0,0,0]; 
 
    for (let n = 0 ; n < S.sc.length ; n++) {
