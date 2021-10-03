@@ -232,16 +232,16 @@ render: `
    let c = Math.cos(time),
        s = Math.sin(time);
 
-   S.sc[0] = [ -.35 + .1*c, .35       ,-.2, .3, 0,0,0];
-   S.sc[1] = [  .25       , .25 + .1*s, .2, .3, 0,0,0];
-   S.sc[2] = [ -.35 - .2*s, .05 - .2*c,-.5, .3, 0,0,0];
-   S.sc[3] = [  .35 - .2*s, .05 + .2*c,-.5, .3, 0,0,0];
+   S.sc[0] = [ s < 0 ? -.58 : -.58 - .3*s, s < 0 ? .35 : .35 + .2*s, -.2, .3, 0,0,0]; 
+   S.sc[1] = [ -.16, .35, -.2, .3, 0,0,0]; 
+   S.sc[2] = [  .26, .35, -.2, .3, 0,0,0]; 
+   S.sc[3] = [ s > 0 ? .68 : .68 + .3*-s, s > 0 ? .35 : .35 + .2*-s, -.2, .3, 0,0,0]; 
 
    for (let n = 0 ; n < S.sc.length ; n++) {
 
       // SPHERE RADIUS IS VARIED VIA SLIDER.
 
-      S.sc[n][3] = .2 + .2 * radius.value / 100;
+      S.sc[n][3] = .2 + .2 * radius.value / 1000;
 
       // SEND SPHERE DATA TO GPU AS A FLAT ARRAY.
 
