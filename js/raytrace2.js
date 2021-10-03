@@ -47,6 +47,9 @@ S.setFragmentShader(\`
 
    // LIGHTS AND SPHERES DATA COMES FROM CPU.
 
+   uniform float uX;
+   uniform float uY;
+
    uniform vec3 uLd[nL];
    uniform vec3 uLc[nL];
 
@@ -138,7 +141,7 @@ S.setFragmentShader(\`
 
       // FORM THE RAY FOR THIS PIXEL.
 
-      vec3 V = vec3(0.,0.,fl);
+      vec3 V = vec3(uX,uY,fl);
       vec3 W = normalize(vec3(vPos.xy, -fl));
 
       // THEN SEE WHAT IT HITS FIRST.
@@ -233,8 +236,8 @@ render: `
        s = Math.sin(time);
 
    S.sc[0] = [ s < 0 ? -.58 : -.58 - .3*s, s < 0 ? .35 : .35 + .2*s, -.2, .3, 0,0,0]; 
-   S.sc[1] = [ s === 0 ? -.16 : -.16 + .0085*c, .35, -.2, .3, 0,0,0]; 
-   S.sc[2] = [ s === 0 ? .26 : .26 + .0085*c, .35, -.2, .3, 0,0,0]; 
+   S.sc[1] = [ s === 0 ? -.16 : -.16 + .0018*c, .35, -.2, .3, 0,0,0]; 
+   S.sc[2] = [ s === 0 ? .26 : .26 + .0018*c, .35, -.2, .3, 0,0,0]; 
    S.sc[3] = [ s > 0 ? .68 : .68 + .3*-s, s > 0 ? .35 : .35 + .2*-s, -.2, .3, 0,0,0]; 
 
    for (let n = 0 ; n < S.sc.length ; n++) {
@@ -256,7 +259,10 @@ render: `
    S.gl.drawArrays(S.gl.TRIANGLE_STRIP, 0, 4);
 `,
 events: `
-   ;
+onDrag = (x,y) => {
+   S.setUniform('1f', 'uX', x);
+   S.setUniform('1f', 'uY', y);
+}
 `
 };
 
