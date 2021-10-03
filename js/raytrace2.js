@@ -18,6 +18,8 @@ code = {
       <p>
           <input type=range id=radius> radius
       <p>
+         <input type=range id=speed min=1 max=25 value=10> speed
+      <p>
           <input type=range id=focal value=10> focal length
           <input type=checkbox id=crazy> Go crazy
    \`);
@@ -232,8 +234,8 @@ render: `
    let sData = [];
    let smData = [];
 
-   let c = Math.cos(time),
-       s = Math.sin(time);
+   let c = Math.cos(time*speed.value),
+       s = Math.sin(time*speed.value);
 
    S.sc[0] = [ s < 0 ? -.58 : -.58 - .3*s, s < 0 ? .35 : .35 + .2*s, -.2, .3, 0,0,0]; 
    S.sc[1] = [ s === 0 ? -.16 : -.16 + .0018*c, .35, -.2, .3, 0,0,0]; 
